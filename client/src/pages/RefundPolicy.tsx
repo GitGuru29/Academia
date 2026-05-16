@@ -10,7 +10,7 @@ export default function RefundPolicy() {
     <main className="legal-page">
       <div className="legal-container">
         <h1>Refund Policy</h1>
-        <p className="last-updated">Last updated: May 2025</p>
+        <p className="last-updated">Last updated: May 2026</p>
 
         <section>
           <h2>1. Our Commitment</h2>
@@ -73,7 +73,7 @@ export default function RefundPolicy() {
         <section>
           <h2>7. Contact</h2>
           <p><strong>WhatsApp:</strong> +94 787345430</p>
-          <p><strong>Email:</strong> academicsupport.help@gmail.com</p>
+          <p><strong>Email:</strong> academiacsupport@gmail.com</p>
         </section>
       </div>
     </main>

@@ -90,7 +90,7 @@ export default function PrivacyPolicy() {
           <h2>9. Contact</h2>
           <p>For any privacy-related concerns:</p>
           <p><strong>WhatsApp:</strong> +94 787345430</p>
-          <p><strong>Email:</strong> academicsupport.help@gmail.com</p>
+          <p><strong>Email:</strong> academiacsupport@gmail.com</p>
         </section>
       </div>
     </main>
