@@ -33,6 +33,7 @@ function Router() {
     <>
       <Navbar 
         onSubmitClick={() => openDrawerWithContext({ tier: 'General Inquiry', service: 'Not specified' })}
+        onTrackClick={() => setIsTrackModalOpen(true)}
       />
       <Switch>
         <Route path={"/"} component={() => (

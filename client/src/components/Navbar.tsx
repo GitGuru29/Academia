@@ -14,7 +14,7 @@ const navItems: NavItem[] = [
   { label: 'Track Project', href: '#track' },
 ];
 
-export default function Navbar({ onSubmitClick }: { onSubmitClick: () => void }) {
+export default function Navbar({ onSubmitClick, onTrackClick }: { onSubmitClick: () => void, onTrackClick: () => void }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -29,6 +29,10 @@ export default function Navbar({ onSubmitClick }: { onSubmitClick: () => void })
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
+    if (href === '#track') {
+      onTrackClick();
+      return;
+    }
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });

@@ -57,7 +57,10 @@ export default function Hero({ onSubmitClick, onTrackClick }: HeroProps) {
             <button className="cta-primary" onClick={onSubmitClick}>
               Get project support <ArrowRight size={18} />
             </button>
-            <button className="cta-ghost" onClick={onTrackClick}>
+            <button className="cta-ghost" onClick={() => {
+              const element = document.getElementById('how-it-works');
+              if (element) element.scrollIntoView({ behavior: 'smooth' });
+            }}>
               See how we work
             </button>
           </motion.div>
