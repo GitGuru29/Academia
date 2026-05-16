@@ -9,7 +9,7 @@ interface TrackOrderModalProps {
 export default function TrackOrderModal({ isOpen, onClose }: TrackOrderModalProps) {
   if (!isOpen) return null;
 
-  const whatsappUrl = 'https://wa.me/94700000000?text=Hi%2C%20I%27d%20like%20to%20track%20my%20project%20status.%20My%20Order%20ID%20is%3A%20';
+  const whatsappUrl = 'https://wa.me/94787345430?text=Hi%2C%20I%27d%20like%20to%20track%20my%20project%20status.%20My%20Order%20ID%20is%3A%20';
 
   return (
     <>
