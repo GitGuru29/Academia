@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import logoUrl from '../assets/logo.png';
 import '../styles/navbar.css';
 
 interface NavItem {
@@ -40,8 +39,10 @@ export default function Navbar({ onSubmitClick }: { onSubmitClick: () => void })
     <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
       <div className="navbar-container">
         {/* Logo */}
-        <div className="navbar-logo" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-          <img src={logoUrl} alt="Academia Logo" className="logo-image" />
+        <div className="navbar-logo">
+          <span className="logo-text">
+            Academic<span className="logo-accent">.</span>
+          </span>
         </div>
 
         {/* Desktop Navigation */}
