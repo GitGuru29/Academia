@@ -26,7 +26,7 @@ const services: Service[] = [
     id: 'agri',
     icon: <Leaf size={24} />,
     title: 'Agriculture Systems Support',
-    description: 'GIS mapping, IoT dashboards, sensor data pipelines, and smart farming systems — full technical support for agriculture-based projects.',
+    description: 'Herbarium albums, Weed albums, Crop record books, GIS mapping, IoT dashboards, and smart farming systems — full support for agriculture-based projects.',
     domain: 'Agriculture',
     pricing: 'from LKR 8,000',
   },
