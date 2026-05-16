@@ -1,4 +1,5 @@
 import { Mail, Phone, Instagram } from 'lucide-react';
+import logoUrl from '../assets/logo.png';
 import '../styles/footer.css';
 
 export default function Footer() {
@@ -8,9 +9,7 @@ export default function Footer() {
         {/* Logo & Tagline */}
         <div className="footer-section">
           <div className="footer-logo">
-            <span className="logo-text">
-              Academic<span className="logo-accent">.</span>
-            </span>
+            <img src={logoUrl} alt="Academia Logo" className="logo-image" style={{ height: '40px', width: 'auto', objectFit: 'contain' }} />
           </div>
           <p className="footer-tagline">Technical project consulting for university students</p>
           <p className="footer-subtext" style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', marginTop: '0.5rem' }}>Confidential · Professional · On time</p>
