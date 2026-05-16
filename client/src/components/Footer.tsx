@@ -60,7 +60,7 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="footer-bottom">
-        <p>© 2025 Academic. · All client engagements are strictly confidential</p>
+        <p>© 2026 Academic. · All rights reserved</p>
       </div>
     </footer>
   );
