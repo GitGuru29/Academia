@@ -11,6 +11,7 @@ interface OrderDrawerProps {
 }
 
 interface OrderFormData {
+  serviceType: string;
   title: string;
   deadline: string;
   description: string;
@@ -23,6 +24,7 @@ interface OrderFormData {
 }
 
 const defaultFormData: OrderFormData = {
+  serviceType: '',
   title: '',
   deadline: '',
   description: '',
@@ -33,6 +35,17 @@ const defaultFormData: OrderFormData = {
   agreed: false,
   files: [],
 };
+
+const serviceTypes = [
+  { id: 'fyp', label: 'FYP Technical Consulting' },
+  { id: 'agri', label: 'Agriculture Systems' },
+  { id: 'data', label: 'Data Analysis' },
+  { id: 'report', label: 'Technical Docs' },
+  { id: 'assignment', label: 'Lab & Assignments' },
+  { id: 'uiux', label: 'Design & UI/UX' },
+  { id: 'mobile', label: 'Mobile App Development' },
+  { id: 'web', label: 'Web Development' },
+];
 
 const TOTAL_STEPS = 2;
 
@@ -49,6 +62,8 @@ export default function OrderDrawer({ isOpen, onClose, initialContext }: OrderDr
     const newErrors: Record<string, string> = {};
 
     if (stepNum === 1) {
+      const showServiceSelect = initialContext?.service === 'Not specified' && initialContext?.tier !== 'FYP Consulting';
+      if (showServiceSelect && !formData.serviceType) newErrors.serviceType = 'Please select a service area';
       if (!formData.title.trim()) newErrors.title = 'Project title is required';
       if (!formData.deadline) newErrors.deadline = 'Deadline is required';
       if (!formData.description.trim()) newErrors.description = 'Description is required';
@@ -139,7 +154,7 @@ export default function OrderDrawer({ isOpen, onClose, initialContext }: OrderDr
         body: JSON.stringify({
           order_id: generatedOrderId,
           tier: initialContext?.tier || 'General Inquiry',
-          service: initialContext?.service || 'Not specified',
+          service: (initialContext?.service === 'Not specified' && initialContext?.tier !== 'FYP Consulting') ? formData.serviceType : (initialContext?.service || 'Not specified'),
           project_title: formData.title,
           deadline: formData.deadline,
           university: formData.university,
@@ -227,6 +242,22 @@ export default function OrderDrawer({ isOpen, onClose, initialContext }: OrderDr
               {step === 1 && (
                 <div className="order-step-content">
                   <h3>Project Details</h3>
+                  {initialContext?.service === 'Not specified' && initialContext?.tier !== 'FYP Consulting' && (
+                    <div className="form-group">
+                      <label>Service Area</label>
+                      <select
+                        value={formData.serviceType}
+                        onChange={(e) => setFormData({ ...formData, serviceType: e.target.value })}
+                        className={errors.serviceType ? 'error' : ''}
+                      >
+                        <option value="">Select a service area</option>
+                        {serviceTypes.map((s) => (
+                          <option key={s.id} value={s.label}>{s.label}</option>
+                        ))}
+                      </select>
+                      {errors.serviceType && <p className="error-message">{errors.serviceType}</p>}
+                    </div>
+                  )}
                   <div className="form-group">
                     <label>Project Title</label>
                     <input
