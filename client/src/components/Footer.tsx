@@ -1,4 +1,5 @@
 import { Mail, Phone, Instagram } from 'lucide-react';
+import { Link } from 'wouter';
 import '../styles/footer.css';
 
 export default function Footer() {
@@ -24,6 +25,16 @@ export default function Footer() {
             <li><a href="#how-it-works">How It Works</a></li>
             <li><a href="#pricing">Pricing</a></li>
             <li><a href="#track">Track Project</a></li>
+          </ul>
+        </div>
+
+        {/* Legal */}
+        <div className="footer-section">
+          <h4 className="footer-title">Legal</h4>
+          <ul className="footer-links">
+            <li><Link href="/privacy-policy">Privacy Policy</Link></li>
+            <li><Link href="/terms-of-service">Terms of Service</Link></li>
+            <li><Link href="/refund-policy">Refund Policy</Link></li>
           </ul>
         </div>
 

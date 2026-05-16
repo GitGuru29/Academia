@@ -10,6 +10,9 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import OrderDrawer from "./components/OrderDrawer";
 import TrackOrderModal from "./components/TrackOrderModal";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import RefundPolicy from "./pages/RefundPolicy";
 
 export interface OrderContext {
   tier?: string;
@@ -38,6 +41,9 @@ function Router() {
             onTrackClick={() => setIsTrackModalOpen(true)}
           />
         )} />
+        <Route path={"/privacy-policy"} component={PrivacyPolicy} />
+        <Route path={"/terms-of-service"} component={TermsOfService} />
+        <Route path={"/refund-policy"} component={RefundPolicy} />
         <Route path={"/404"} component={NotFound} />
         {/* Final fallback route */}
         <Route component={NotFound} />
