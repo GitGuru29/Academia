@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Upload, CheckCircle, AlertCircle, Code, Leaf, BarChart3, FileText, Zap, Palette } from 'lucide-react';
+import { X, Upload, CheckCircle, AlertCircle, Code, Leaf, BarChart3, FileText, Zap, Palette, Smartphone, Globe } from 'lucide-react';
 import { toast } from 'sonner';
 import '../styles/order-drawer.css';
 
@@ -53,6 +53,8 @@ const serviceTypes = [
   { id: 'report', label: 'Technical Docs', icon: <FileText size={28} strokeWidth={1.5} /> },
   { id: 'assignment', label: 'Lab & Assignments', icon: <Zap size={28} strokeWidth={1.5} /> },
   { id: 'uiux', label: 'Design & UI/UX', icon: <Palette size={28} strokeWidth={1.5} /> },
+  { id: 'mobile', label: 'Mobile App Development', icon: <Smartphone size={28} strokeWidth={1.5} /> },
+  { id: 'web', label: 'Web Development', icon: <Globe size={28} strokeWidth={1.5} /> },
 ];
 
 const defaultFormData: OrderFormData = {

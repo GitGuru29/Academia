@@ -1,4 +1,4 @@
-import { Code, Leaf, BarChart3, FileText, Zap, Palette, ArrowRight } from 'lucide-react';
+import { Code, Leaf, BarChart3, FileText, Zap, Palette, ArrowRight, Smartphone, Globe } from 'lucide-react';
 import { motion } from 'framer-motion';
 import '../styles/services.css';
 
@@ -61,6 +61,22 @@ const services: Service[] = [
     description: 'Figma prototypes, system UI design, project presentations, and pitch decks that make your work stand out.',
     domain: 'IT',
     pricing: 'from LKR 3,000',
+  },
+  {
+    id: 'mobile',
+    icon: <Smartphone size={24} />,
+    title: 'Mobile App Development',
+    description: 'Kotlin and Flutter development for high-performance, native and cross-platform mobile applications.',
+    domain: 'IT',
+    pricing: 'from LKR 10,000',
+  },
+  {
+    id: 'web',
+    icon: <Globe size={24} />,
+    title: 'Web Development',
+    description: 'Full-stack web application development using modern frameworks, REST APIs, and databases.',
+    domain: 'IT',
+    pricing: 'from LKR 8,000',
   },
 ];
 
