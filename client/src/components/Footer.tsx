@@ -31,11 +31,11 @@ export default function Footer() {
         <div className="footer-section">
           <h4 className="footer-title">Contact</h4>
           <div className="footer-contact">
-            <a href="https://wa.me/94" className="contact-link">
+            <a href="https://wa.me/94787345430" className="contact-link">
               <Phone size={18} />
               <span>WhatsApp</span>
             </a>
-            <a href="mailto:hello@academic.local" className="contact-link">
+            <a href="mailto:academiacsupport@gmail.com" className="contact-link">
               <Mail size={18} />
               <span>Email</span>
             </a>
