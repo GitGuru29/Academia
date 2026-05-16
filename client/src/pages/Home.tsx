@@ -6,15 +6,17 @@ import Pricing from '@/components/Pricing';
 import WhyUs from '@/components/WhyUs';
 import Testimonials from '@/components/Testimonials';
 
+import { OrderContext } from '@/App';
+
 interface HomeProps {
-  onSubmitClick: () => void;
+  onSubmitClick: (context?: OrderContext) => void;
   onTrackClick: () => void;
 }
 
 export default function Home({ onSubmitClick, onTrackClick }: HomeProps) {
   return (
     <main>
-      <Hero onSubmitClick={onSubmitClick} onTrackClick={onTrackClick} />
+      <Hero onSubmitClick={() => onSubmitClick({ tier: 'General Inquiry', service: 'Not specified' })} onTrackClick={onTrackClick} />
       <Marquee />
       <Services onSubmitClick={onSubmitClick} />
       <HowItWorks />

@@ -122,3 +122,4 @@ references/
 drizzle/
 drizzle.config.ts
 vite.config.ts.bak
+.project-config.json

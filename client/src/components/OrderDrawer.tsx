@@ -1,16 +1,16 @@
 import { useState } from 'react';
-import { X, Upload, CheckCircle, AlertCircle, Code, Leaf, BarChart3, FileText, Zap, Palette, Smartphone, Globe } from 'lucide-react';
+import { X, Upload, CheckCircle, AlertCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { OrderContext } from '@/App';
 import '../styles/order-drawer.css';
 
 interface OrderDrawerProps {
   isOpen: boolean;
   onClose: () => void;
+  initialContext?: OrderContext;
 }
 
 interface OrderFormData {
-  tier: string;
-  serviceType: string;
   title: string;
   deadline: string;
   description: string;
@@ -22,44 +22,7 @@ interface OrderFormData {
   files: File[];
 }
 
-const tiers = [
-  {
-    id: 'quick',
-    label: 'Quick Support',
-    price: 'LKR 500+',
-    desc: 'Single assignments, lab reports, short tasks. Fast turnaround.',
-    features: ['24–48hr delivery', 'Basic revisions', 'Up to 5 pages'],
-  },
-  {
-    id: 'project',
-    label: 'Project Support',
-    price: 'LKR 2,500+',
-    desc: 'Mid-scope projects, data analysis, documentation, UI work.',
-    features: ['5–7 day delivery', 'Unlimited revisions', 'Priority support'],
-  },
-  {
-    id: 'fyp',
-    label: 'FYP Consulting',
-    price: 'LKR 15,000+',
-    desc: 'Full FYP technical consulting and implementation. Scoped per project.',
-    features: ['Custom timeline', 'Dedicated support', 'Documentation included'],
-  },
-];
-
-const serviceTypes = [
-  { id: 'fyp', label: 'FYP Technical Consulting', icon: <Code size={28} strokeWidth={1.5} /> },
-  { id: 'agri', label: 'Agriculture Systems', icon: <Leaf size={28} strokeWidth={1.5} /> },
-  { id: 'data', label: 'Data Analysis', icon: <BarChart3 size={28} strokeWidth={1.5} /> },
-  { id: 'report', label: 'Technical Docs', icon: <FileText size={28} strokeWidth={1.5} /> },
-  { id: 'assignment', label: 'Lab & Assignments', icon: <Zap size={28} strokeWidth={1.5} /> },
-  { id: 'uiux', label: 'Design & UI/UX', icon: <Palette size={28} strokeWidth={1.5} /> },
-  { id: 'mobile', label: 'Mobile App Development', icon: <Smartphone size={28} strokeWidth={1.5} /> },
-  { id: 'web', label: 'Web Development', icon: <Globe size={28} strokeWidth={1.5} /> },
-];
-
 const defaultFormData: OrderFormData = {
-  tier: '',
-  serviceType: '',
   title: '',
   deadline: '',
   description: '',
@@ -71,9 +34,9 @@ const defaultFormData: OrderFormData = {
   files: [],
 };
 
-const TOTAL_STEPS = 4;
+const TOTAL_STEPS = 2;
 
-export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
+export default function OrderDrawer({ isOpen, onClose, initialContext }: OrderDrawerProps) {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState<OrderFormData>(defaultFormData);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -86,15 +49,11 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
     const newErrors: Record<string, string> = {};
 
     if (stepNum === 1) {
-      if (!formData.tier) newErrors.tier = 'Please select a support tier';
-    } else if (stepNum === 2) {
-      if (!formData.serviceType) newErrors.serviceType = 'Please select a service area';
-    } else if (stepNum === 3) {
       if (!formData.title.trim()) newErrors.title = 'Project title is required';
       if (!formData.deadline) newErrors.deadline = 'Deadline is required';
       if (!formData.description.trim()) newErrors.description = 'Description is required';
       if (!formData.university.trim()) newErrors.university = 'University name is required';
-    } else if (stepNum === 4) {
+    } else if (stepNum === 2) {
       if (!formData.contactName.trim()) newErrors.contactName = 'Full name is required';
       if (!formData.whatsapp.trim()) newErrors.whatsapp = 'WhatsApp number is required';
       if (!formData.email.trim()) newErrors.email = 'Email is required';
@@ -129,7 +88,7 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
   };
 
   const handleSubmit = async () => {
-    if (!validateStep(4)) return;
+    if (!validateStep(2)) return;
 
     setIsSubmitting(true);
     setErrors({});
@@ -174,16 +133,13 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
       const generatedOrderId = `ORD-${Date.now().toString(36).toUpperCase()}`;
 
       // Step 3: Send via Brevo serverless function
-      const tierLabel = tiers.find(t => t.id === formData.tier)?.label || formData.tier;
-      const serviceLabel = serviceTypes.find(s => s.id === formData.serviceType)?.label || formData.serviceType;
-
       const res = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           order_id: generatedOrderId,
-          tier: tierLabel,
-          service: serviceLabel,
+          tier: initialContext?.tier || 'General Inquiry',
+          service: initialContext?.service || 'Not specified',
           project_title: formData.title,
           deadline: formData.deadline,
           university: formData.university,
@@ -227,7 +183,7 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
     ? 'Submitting...'
     : 'Submit Request →';
 
-  const stepLabels = ['Select Tier', 'Service Area', 'Project Details', 'Your Info'];
+  const stepLabels = ['Project Details', 'Your Info'];
 
   return (
     <>
@@ -267,62 +223,8 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
             </div>
           ) : (
             <>
-              {/* Step 1: Tier Selection */}
+              {/* Step 1: Project Details */}
               {step === 1 && (
-                <div className="order-step-content">
-                  <h3>Choose Your Support Level</h3>
-                  <div className="tier-selector">
-                    {tiers.map((tier) => (
-                      <button
-                        key={tier.id}
-                        className={`tier-option ${formData.tier === tier.id ? 'selected' : ''}`}
-                        onClick={() => {
-                          setFormData({ ...formData, tier: tier.id });
-                          setErrors({ ...errors, tier: '' });
-                        }}
-                      >
-                        <div className="tier-header">
-                          <span className="tier-label">{tier.label}</span>
-                          <span className="tier-price">{tier.price}</span>
-                        </div>
-                        <p className="tier-desc">{tier.desc}</p>
-                        <ul className="tier-features">
-                          {tier.features.map((f) => (
-                            <li key={f}>✓ {f}</li>
-                          ))}
-                        </ul>
-                      </button>
-                    ))}
-                  </div>
-                  {errors.tier && <p className="error-message">{errors.tier}</p>}
-                </div>
-              )}
-
-              {/* Step 2: Service Type */}
-              {step === 2 && (
-                <div className="order-step-content">
-                  <h3>Select Your Service Area</h3>
-                  <div className="service-selector">
-                    {serviceTypes.map((service) => (
-                      <button
-                        key={service.id}
-                        className={`service-option ${formData.serviceType === service.id ? 'selected' : ''}`}
-                        onClick={() => {
-                          setFormData({ ...formData, serviceType: service.id });
-                          setErrors({ ...errors, serviceType: '' });
-                        }}
-                      >
-                        <span className="service-icon">{service.icon}</span>
-                        <span className="service-label">{service.label}</span>
-                      </button>
-                    ))}
-                  </div>
-                  {errors.serviceType && <p className="error-message">{errors.serviceType}</p>}
-                </div>
-              )}
-
-              {/* Step 3: Project Details */}
-              {step === 3 && (
                 <div className="order-step-content">
                   <h3>Project Details</h3>
                   <div className="form-group">
@@ -390,8 +292,8 @@ export default function OrderDrawer({ isOpen, onClose }: OrderDrawerProps) {
                 </div>
               )}
 
-              {/* Step 4: Contact Info */}
-              {step === 4 && (
+              {/* Step 2: Contact Info */}
+              {step === 2 && (
                 <div className="order-step-content">
                   <h3>Contact Information</h3>
                   <div className="form-group">

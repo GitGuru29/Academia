@@ -80,8 +80,10 @@ const services: Service[] = [
   },
 ];
 
+import { OrderContext } from '@/App';
+
 interface ServicesProps {
-  onSubmitClick?: () => void;
+  onSubmitClick?: (context?: OrderContext) => void;
 }
 
 export default function Services({ onSubmitClick }: ServicesProps) {
@@ -120,7 +122,7 @@ export default function Services({ onSubmitClick }: ServicesProps) {
                 <span className="service-pricing">{service.pricing}</span>
               </div>
 
-              <button className="service-cta" onClick={onSubmitClick}>
+              <button className="service-cta" onClick={() => onSubmitClick && onSubmitClick({ service: service.title, tier: service.pricing.includes('15,000') ? 'FYP Consulting' : 'Not specified' })}>
                 Quick order <ArrowRight size={16} />
               </button>
             </motion.div>

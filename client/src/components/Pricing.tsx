@@ -56,8 +56,10 @@ const tiers: PricingTier[] = [
   },
 ];
 
+import { OrderContext } from '@/App';
+
 interface PricingProps {
-  onSubmitClick?: () => void;
+  onSubmitClick?: (context?: OrderContext) => void;
 }
 
 export default function Pricing({ onSubmitClick }: PricingProps) {
@@ -102,7 +104,7 @@ export default function Pricing({ onSubmitClick }: PricingProps) {
                 <span className="pricing-period">{tier.period}</span>
               </div>
 
-              <button className="pricing-cta" onClick={onSubmitClick}>
+              <button className="pricing-cta" onClick={() => onSubmitClick && onSubmitClick({ tier: tier.name, service: 'Not specified' })}>
                 Get started
               </button>
 
@@ -129,7 +131,7 @@ export default function Pricing({ onSubmitClick }: PricingProps) {
           className="pricing-custom"
         >
           <p>Every engagement is scoped individually — submit your brief and we'll give you an exact quote.</p>
-          <button className="custom-link" onClick={onSubmitClick}>
+          <button className="custom-link" onClick={() => onSubmitClick && onSubmitClick({ tier: 'General Inquiry', service: 'Not specified' })}>
             Need a custom quote? → Tell us about your project
           </button>
         </motion.div>

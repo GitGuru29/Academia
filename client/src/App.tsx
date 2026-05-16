@@ -11,19 +11,30 @@ import Footer from "./components/Footer";
 import OrderDrawer from "./components/OrderDrawer";
 import TrackOrderModal from "./components/TrackOrderModal";
 
+export interface OrderContext {
+  tier?: string;
+  service?: string;
+}
+
 function Router() {
   const [isOrderDrawerOpen, setIsOrderDrawerOpen] = useState(false);
+  const [orderContext, setOrderContext] = useState<OrderContext>({});
   const [isTrackModalOpen, setIsTrackModalOpen] = useState(false);
+
+  const openDrawerWithContext = (context?: OrderContext) => {
+    setOrderContext(context || {});
+    setIsOrderDrawerOpen(true);
+  };
 
   return (
     <>
       <Navbar 
-        onSubmitClick={() => setIsOrderDrawerOpen(true)}
+        onSubmitClick={() => openDrawerWithContext({ tier: 'General Inquiry', service: 'Not specified' })}
       />
       <Switch>
         <Route path={"/"} component={() => (
           <Home 
-            onSubmitClick={() => setIsOrderDrawerOpen(true)}
+            onSubmitClick={(context) => openDrawerWithContext(context || { tier: 'General Inquiry', service: 'Not specified' })}
             onTrackClick={() => setIsTrackModalOpen(true)}
           />
         )} />
@@ -35,6 +46,7 @@ function Router() {
       <OrderDrawer 
         isOpen={isOrderDrawerOpen}
         onClose={() => setIsOrderDrawerOpen(false)}
+        initialContext={orderContext}
       />
       <TrackOrderModal
         isOpen={isTrackModalOpen}
